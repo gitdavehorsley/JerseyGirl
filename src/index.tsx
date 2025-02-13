@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css'; // optional if you have index.css
-import App from './App';
+import './index.css'; // optional global stylesheet
+import LandingPage from './components/LandingPage';
 
-const container = document.getElementById('root')!;
+const container = document.getElementById('root') as HTMLElement;
 const root = ReactDOM.createRoot(container);
 
 root.render(
   <React.StrictMode>
-    <App />
+    <LandingPage />
   </React.StrictMode>
 );
