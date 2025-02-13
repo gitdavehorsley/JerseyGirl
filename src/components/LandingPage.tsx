@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 import { X } from 'lucide-react';
 
 interface SignUpFormData {
@@ -43,6 +40,31 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => (
     )}
   </AnimatePresence>
 );
+
+const CustomButton: React.FC<{
+  onClick?: () => void;
+  className?: string;
+  disabled?: boolean;
+  type?: 'button' | 'submit';
+  variant?: 'primary' | 'outline';
+  children: React.ReactNode;
+}> = ({ onClick, className = '', disabled, type = 'button', variant = 'primary', children }) => {
+  const baseStyles = "px-6 py-3 rounded-full font-semibold transition-all";
+  const variantStyles = variant === 'primary' 
+    ? "bg-blue-600 text-white hover:bg-blue-700 disabled:bg-blue-400"
+    : "border-2 border-blue-600 text-blue-600 hover:bg-blue-50 disabled:border-blue-400 disabled:text-blue-400";
+  
+  return (
+    <button
+      onClick={onClick}
+      type={type}
+      disabled={disabled}
+      className={`${baseStyles} ${variantStyles} ${className}`}
+    >
+      {children}
+    </button>
+  );
+};
 
 export default function LandingPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -135,109 +157,63 @@ export default function LandingPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <Button 
-              onClick={() => setIsModalOpen(true)}
-              className="px-6 py-3 rounded-full bg-white text-blue-600 font-semibold hover:bg-blue-50 transition-all"
-            >
+            <CustomButton onClick={() => setIsModalOpen(true)}>
               Sign Up for Specials
-            </Button>
+            </CustomButton>
           </motion.div>
         </div>
       </header>
 
-      {/* About Section */}
-      <section className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          <div>
-            <motion.h2
-              className="text-3xl font-semibold mb-4"
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              About JerseyGirl
-            </motion.h2>
-            <motion.p
-              className="text-lg leading-relaxed"
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              viewport={{ once: true }}
-            >
-              JerseyGirl is a local kitchen dedicated to bringing our community the freshest,
-              tastiest dishes every week. Whether you're craving classic comfort food
-              or something a little more adventurous, we've got you covered. 
-            </motion.p>
-          </div>
-          <motion.div
-            className="rounded-xl overflow-hidden h-64"
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <img
-              src="/api/placeholder/800/600"
-              alt="JerseyGirl Kitchen"
-              className="w-full h-full object-cover"
-            />
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Features Section - Rest of the code remains the same until the Modal */}
+      {/* Rest of the sections remain the same until the Modal */}
 
       {/* Sign Up Modal */}
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <h2 className="text-2xl font-semibold mb-4">Sign Up for Weekly Specials</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="flex gap-4 mb-4">
-            <Button
-              type="button"
-              variant={formData.type === 'email' ? 'default' : 'outline'}
+            <CustomButton
               onClick={() => setFormData(prev => ({ ...prev, type: 'email', value: '' }))}
+              variant={formData.type === 'email' ? 'primary' : 'outline'}
               className="flex-1"
             >
               Email
-            </Button>
-            <Button
-              type="button"
-              variant={formData.type === 'phone' ? 'default' : 'outline'}
+            </CustomButton>
+            <CustomButton
               onClick={() => setFormData(prev => ({ ...prev, type: 'phone', value: '' }))}
+              variant={formData.type === 'phone' ? 'primary' : 'outline'}
               className="flex-1"
             >
               Phone
-            </Button>
+            </CustomButton>
           </div>
 
-          <Input
+          <input
             type={formData.type === 'email' ? 'email' : 'tel'}
             placeholder={formData.type === 'email' ? 'Enter your email' : 'Enter your phone number'}
             value={formData.value}
             onChange={(e) => setFormData(prev => ({ ...prev, value: e.target.value }))}
-            className="w-full"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
           />
 
           {error && (
-            <Alert variant="destructive">
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
+            <div className="bg-red-50 text-red-800 p-4 rounded-lg">
+              {error}
+            </div>
           )}
 
           {success && (
-            <Alert className="bg-green-50">
-              <AlertDescription>{success}</AlertDescription>
-            </Alert>
+            <div className="bg-green-50 text-green-800 p-4 rounded-lg">
+              {success}
+            </div>
           )}
 
-          <Button
+          <CustomButton
             type="submit"
             className="w-full"
             disabled={loading}
           >
             {loading ? 'Signing up...' : 'Sign Up'}
-          </Button>
+          </CustomButton>
         </form>
       </Modal>
     </div>
