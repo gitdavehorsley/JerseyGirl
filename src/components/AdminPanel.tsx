@@ -13,7 +13,7 @@ import {
 } from './ui/table';
 
 // Replace this with the actual API Gateway endpoint from your CloudFormation output
-const API_ENDPOINT = 'https://abcdefgh.execute-api.us-east-1.amazonaws.com/prod/subscribers';
+const API_ENDPOINT = 'https://08nvdwe763.execute-api.us-east-1.amazonaws.com/prod/subscribers';
 
 // Placeholder functions for uploading a PDF and scheduling notifications.
 // In production, you'd call your own API endpoints or AWS services.
