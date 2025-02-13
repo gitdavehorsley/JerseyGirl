@@ -1,33 +1,11 @@
-// tsconfig.json
 {
   "compilerOptions": {
-    // Target older environments (ES5) or change to ES6, etc. as needed
-    "target": "ES5",
-    // Include libs for DOM, ESNext, etc.
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    // Allow JS in TS files if needed
-    "allowJs": true,
-    // Don't perform type-checking on declaration files
-    "skipLibCheck": true,
-    // Enable strict mode
-    "strict": true,
-    // Enforce consistent casing in file names
-    "forceConsistentCasingInFileNames": true,
-    // Enforce no fallthrough in switch statements
-    "noFallthroughCasesInSwitch": true,
-    // Output ESNext modules, which CRA will handle
-    "module": "ESNext",
-    // Let TS figure out how to resolve modules
-    "moduleResolution": "node",
-    // For importing JSON modules
-    "resolveJsonModule": true,
-    // Each file is treated as a separate module
-    "isolatedModules": true,
-    // Don't emit compiled files; CRA handles bundling
-    "noEmit": true,
-    // Use the new JSX transform for React 17+ (React 18 included)
-    "jsx": "react-jsx"
+    // ...
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    // ...
   },
-  // Only compile files in the src folder
   "include": ["src"]
 }
+
